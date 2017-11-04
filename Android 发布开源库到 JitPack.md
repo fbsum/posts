@@ -15,7 +15,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.username' 
 ```
 
-* 添加 gradle task，避免 jitpack 打包丢失源码
+* 添加 gradle task，避免 JitPack 打包丢失源码
 
 ```groovy
 // 打包源码jar

@@ -37,6 +37,7 @@
 使用 Bitmap Shader
 
 ### TextView 添加下划线／中划线
+
 ```java
 	// 加下划线
 	textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -54,6 +55,7 @@
 ```
 
 ### 严格模式
+
 ```java
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
