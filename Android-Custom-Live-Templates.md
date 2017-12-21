@@ -62,27 +62,3 @@
 ```
 groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i < params.size(); i++) {result += ((i == 0) ? '\"' : '\",') + params[i] + ' = \" + ' + params[i] + ((i < params.size() - 1) ? ' + ' : '');}; return result", methodParameters())
 ```
-
-### eventbusreg
-
-快速登记 EventBus。
-
-| Key           | Value 					                  |
-|:--------------|:----------------------------------------|
-| Abbreviation  | eventbusreg                             |
-| Description   | register EventBus                       |
-| Template Text | EventBus.getDefault().register(this);   |
-| Applicable    | java: statement                         |
-| Variables     |                                         |
-
-### eventbusunreg
-
-快速注销 EventBus。
-
-| Key           | Value 					                  |
-|:--------------|:----------------------------------------|
-| Abbreviation  | eventbusunreg                           |
-| Description   | unregister EventBus                     |
-| Template Text | EventBus.getDefault().unregister(this); |
-| Applicable    | java: statement                         |
-| Variables     |                                         |

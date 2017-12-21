@@ -1,2 +1,0 @@
-# posts
-My posts

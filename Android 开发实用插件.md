@@ -71,6 +71,9 @@ IDEA 支持显示 Markdown 文件
 
 ## 图像相关
 
+### [Android Drawable Importer](https://plugins.jetbrains.com/plugin/7658-android-drawable-importer)
+快速导入图片
+
 ### [Android Material Design Icon Generator Plugin](https://github.com/konifar/android-material-design-icon-generator-plugin)
 生成  Material Design Icon
 
