@@ -1,6 +1,5 @@
 # Android 发布开源库到 JitPack
 
-* 项目上传到 GitHub
 * 根目录的 build.gradle 添加 
 
 ```gradle
@@ -43,6 +42,7 @@ artifacts {
 }
 ```
 
-* 上传代码，并在 GitHub 上为项目创建 Release
+* 项目上传到 GitHub
+* 在 GitHub 上为项目创建 Release
 
 ### 参考：[Android 发布开源库到 JitPack、jCenter](http://www.jianshu.com/p/b7552cf8983b)

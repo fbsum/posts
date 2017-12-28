@@ -69,6 +69,11 @@ IDEA 支持显示 Markdown 文件
 ### [Emoji Support Plugin](https://plugins.jetbrains.com/plugin/9174-emoji-support-plugin)
 让 IDEA 支持 Emoji 的输入提醒
 
+## 安全监测
+
+### [Devknox](https://devknox.io/documentation/)
+能检测基本的移动安全问题，还能提供为题修复的实时建议
+
 ## 图像相关
 
 ### [Android Drawable Importer](https://plugins.jetbrains.com/plugin/7658-android-drawable-importer)

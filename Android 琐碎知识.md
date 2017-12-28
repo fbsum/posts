@@ -18,6 +18,19 @@
     }
 ```
 
+### 悬浮窗权限 type 设置
+```
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        } else {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+```
+
 ### 应用内切换语言
 ```
       private lateinit var locale: Locale
