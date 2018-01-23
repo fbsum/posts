@@ -18,6 +18,58 @@
     }
 ```
 
+### AppbarLayout 与 NestedScrollView 嵌套 RecyclerView 使用时，触发 Fling 会导致 Header 布局在未滚动到顶部时，就出现
+```
+public class EnhancedNestedScrollView extends NestedScrollView {
+    
+    private boolean flingEnable = true;
+
+    public EnhancedNestedScrollView(Context context) {
+        super(context);
+    }
+
+    public EnhancedNestedScrollView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public EnhancedNestedScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void fling(int velocityY) {
+        if (flingEnable) {
+            super.fling(velocityY);
+        }
+    }
+
+    public void setFlingEnable(boolean flingEnable) {
+        this.flingEnable = flingEnable;
+    }
+}
+```
+```
+        nestedScrollView.setFlingEnable(false);
+        recyclerView.setNestedScrollingEnabled(false);
+        appbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) - appBarLayout.getTotalScrollRange() == 0) {
+                    //  Collapsed
+                    nestedScrollView.setFlingEnable(true);
+                } else {
+                    //Expanded
+                    nestedScrollView.setFlingEnable(false);
+                }
+            }
+        });
+```
+
+### 360 加固后需要 zipalign 才能上传 google play
+```
+./zipalign -v 4 zipalign处理前的apk zipalign处理后的apk
+```
+
 ### 监听虚拟按键
 ```
     class InnerReceiver extends BroadcastReceiver {
