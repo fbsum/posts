@@ -107,36 +107,85 @@ public class EnhancedNestedScrollView extends NestedScrollView {
 ```
 
 ### 应用内切换语言
+
+Application：
+
 ```
-      private lateinit var locale: Locale
-  
-      override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-		 // ......
-        val language = PreferencesUtils.getString(PreferencesKey.LANGUAGE, Locale.ENGLISH.language)
-        locale = Locale(language)
-        if (!checkLanguage()) {
-            updateAppLocale(this, locale)
-            return
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleAdapter() {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                val savedLocale = AppLanguageUtils.getAppLocale()
+                if (!TextUtils.equals(activity.resources.configuration.locale.language, savedLocale.language)) {
+                    LanguageUtils.changeAppLocale(activity, savedLocale)
+                }
+            }
+        })
+```
+
+Activity：
+
+```
+    /**
+     * 更换应用语言，重启 Activity
+     */
+    private fun updateAppLocale(context: Context, locale: Locale) {
+        AppLanguageUtils.setAppLocale(locale)
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        intent.putExtra(ARG_MOTTO_INDEX, viewModel.getCurrentMottoIndex())
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+    }
+```
+
+LanguageUtils
+
+```
+    public static void changeAppLocale(Context context, Locale locale) {
+        Resources resources = context.getResources();
+        Configuration config = resources.getConfiguration();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.locale = locale;
+        } else {
+            config.setLocale(locale);
+        }
+        resources.updateConfiguration(config, dm);
+    }
+```
+
+AppLanguageUtils
+
+```
+        /**
+         * 获取当前语言配置
+         */
+        fun getAppLocale(): Locale {
+            val defaultLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                LocaleList.getDefault().get(0)
+            } else {
+                Locale.getDefault()
+            }
+            val defaultLanguage = if (TextUtils.equals(Locale.CHINESE.language, defaultLocale.language)) {
+                Locale.CHINESE.language
+            } else {
+                Locale.ENGLISH.language
+            }
+            val language = PreferencesUtils.getString(PreferencesKey.LANGUAGE, defaultLanguage)
+            return Locale(language)
         }
 
-        setContentView(R.layout.main_activity)
-		 // ......
-    }
-    
-    @CheckResult
-    private fun checkLanguage(): Boolean {
-        return TextUtils.equals(locale.language, resources.configuration.locale.language)
-    }
-    
-    fun updateAppLocale(context: Context, locale: Locale) {
-        val resources = context.applicationContext.resources
-        val config = resources.configuration
-        config.locale = locale
-        resources.updateConfiguration(config, resources.displayMetrics)
-        recreate()
-    }
+        /**
+         * 保存语言配置
+         */
+        fun setAppLocale(locale: Locale) {
+            val language = if (locale == Locale.CHINESE) {
+                Locale.CHINESE.language
+            } else {
+                Locale.ENGLISH.language
+            }
+            PreferencesUtils.putString(PreferencesKey.LANGUAGE, language)
+        }
 ```
 
 ### 代码混淆
