@@ -19,6 +19,8 @@
 ### [BlockCanary](https://github.com/markzhai/AndroidPerformanceMonitor)
 监测导致卡顿的代码
 
+### [AndroidGodEye](https://github.com/Kyson/AndroidGodEye)
+Android 性能监测工具
 
 ## 在线工具
 

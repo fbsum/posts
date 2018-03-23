@@ -14,4 +14,7 @@
 
 .gone : set view gone
     android.view.View        →  $expr$.setVisibility(View.GONE);
+    
+.isemp : check empty charSequence
+	java.lang.CharSequence   →  TextUtils.isEmpty($expr$)
 ```

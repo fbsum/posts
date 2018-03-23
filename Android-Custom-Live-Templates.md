@@ -1,5 +1,7 @@
 # Custom Live Template
 
+## Java
+
 ### classthis
 
 快速生成 XxxClass.this，尤其是在匿名类中获取主类的 this 属性。

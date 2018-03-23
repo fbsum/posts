@@ -1,6 +1,7 @@
 # Android 琐碎知识
 
 ### 未整理
+
 ```
  /**
      * 修复 Android 11~17 中，{@link android.graphics.Canvas#clipPath(Path)} 引起的
@@ -16,6 +17,25 @@
             view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
     }
+```
+
+### 结束动画
+建议加上超时保护或通过 postDelay 替代 onAnimationEnd
+
+```
+View v = findViewById(R.id.xxxViewID);final FadeUpAnimation anim = new FadeUpAnimation(v); anim.setInterpolator(new AccelerateInterpolator()); anim.setDuration(1000);anim.setFillAfter(true);new Handler().postDelayed(new Runnable() {public void run() {if (v != null) { v.clearAnimation();} }}, anim.getDuration()); v.startAnimation(anim);
+```
+
+### 正确使用线程池
+新建线程时,必须通过线程池提供(AsyncTask 或者 ThreadPoolExecutor 或者其他形式自定义的线程池),不允许在应用中自行显式创建线程。说明:    使用线程池的好处是减少在创建和销毁线程上所花的时间以及系统资源的开销,解 决资源不足的问题。如果不使用线程池,有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。另外创建匿名线程不便于后续的资源使用分析,对性能分析等会造成困扰。
+    
+```
+int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();int KEEP_ALIVE_TIME = 1;TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS; BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<Runnable>();ExecutorService executorService = new ThreadPoolExecutor(NUMBER_OF_CORES, NUMBER_OF_CORES*2, KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, taskQueue, new BackgroundThreadFactory(), new DefaultRejectedExecutionHandler());//执行任务executorService.execute(new Runnnable() { ...});
+```
+
+### Kotlin 编译增量更新
+```
+在项目的gradle.properties中增加kotlin.incremental=true 开启kotlin的增量编译。
 ```
 
 ### AppbarLayout 与 NestedScrollView 嵌套 RecyclerView 使用时，触发 Fling 会导致 Header 布局在未滚动到顶部时，就出现

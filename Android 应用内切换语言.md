@@ -3,11 +3,12 @@
 在所有 Activity.onCreate() 里更新语言切换的资源，无需重启 Activity
 
 ```
+		// In Application
         registerActivityLifecycleCallbacks(object : ActivityLifecycleAdapter() {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 val savedLocale = AppLanguageUtils.getAppLocale()
                 if (!TextUtils.equals(activity.resources.configuration.locale.language, savedLocale.language)) {
-                    LanguageUtils.changeAppLocale(activity, savedLocale)
+                    LanguageUtils.updateLocale(activity, savedLocale)
                 }
             }
         })
@@ -25,7 +26,6 @@
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        intent.putExtra(ARG_MOTTO_INDEX, viewModel.getCurrentMottoIndex())
         startActivity(intent)
         overridePendingTransition(0, 0)
     }
@@ -34,7 +34,7 @@
 LanguageUtils
 
 ```
-    public static void changeAppLocale(Context context, Locale locale) {
+    public static void updateLocale(Context context, Locale locale) {
         Resources resources = context.getResources();
         Configuration config = resources.getConfiguration();
         DisplayMetrics dm = resources.getDisplayMetrics();

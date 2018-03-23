@@ -1,4 +1,4 @@
-# Android 代码规范
+# Android 代码规范（Java 版）
 
 * 使用 TextUtils.equals(str1,str2) 替换 str1.equals(str2)
 
